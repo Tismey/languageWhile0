@@ -1,0 +1,16 @@
+#define T_ID 256
+#define T_NUMBER 257
+#define T_OPERATOR 258
+#define T_B 259
+#define T_OB 260
+#define T_OC 261
+#define T_IF 262
+#define T_THEN 263 
+#define T_ELSE 264
+#define T_PV 265 
+#define T_PO 266 
+#define T_PF 267
+#define T_AFF 268
+#define T_SKIP 269
+#define T_WHILE 270
+#define T_DO 271
