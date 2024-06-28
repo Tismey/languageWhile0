@@ -1,7 +1,7 @@
 
 
 executable:  y.tab.o operator.o lex.yy.o interpreter.o operator.c 
-	gcc -g -o executable lex.yy.o y.tab.o operator.o interpreter.o -ll
+	gcc -g -o executable lex.yy.o y.tab.o operator.o interpreter.o -ll -lm
 
 lex.yy.o: lex.yy.c y.tab.h
 	gcc -g -c lex.yy.c

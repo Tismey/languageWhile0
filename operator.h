@@ -46,6 +46,7 @@ nodeType *con(int value);
 nodeType *id(int i);
 
 void printList();
+void printSyntaxTreeHelper(nodeType *p, int depth);
 extern int sym[26];
 
 

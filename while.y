@@ -38,7 +38,7 @@ int sym[26];
 
 %%
 program:
-stmt_list'.'{ result = $1; printf("================COMPILED==================\n\n"); YYACCEPT;}
+stmt_list'.'{ result = $1; printSyntaxTreeHelper(result,0); printf("================PARSE SUCCESS==================\n\n"); YYACCEPT;}
 ;
 statement:
 IF '(' expr ')' THEN '{' stmt_list '}' ELSE '{' stmt_list '}'{$$ = opr(IF,3,$3,$7,$11);}
@@ -79,7 +79,9 @@ void yyerror(char *s) {
 
 int main(void) {
 if(yyparse() == 0) {
+    printf("======================================INTERPRETER============================================\n");
     ex(result);
+    printf("================================INTERPRETER EXIT SUCCESS=====================================\n");
 }
 return 0;
 }

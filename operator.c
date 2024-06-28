@@ -113,7 +113,6 @@ char * oprToString(int oper){
         }
         printf("searching for %s\n",name);
         while(tmp->next != NULL){
-            printf("cur var is %s\n",tmp->name);
             if(strcmp(tmp->name,name) == 0){
                 printf("found %s at %d\n",name,id);
                 return id;
@@ -121,7 +120,6 @@ char * oprToString(int oper){
             id++;
             tmp = tmp->next;
         }
-        printf("cur var is %s\n",tmp->name);
         if(strcmp(tmp->name,name) == 0){
              printf("found %s at %d\n",name,id);
             return id;
@@ -158,5 +156,30 @@ char * oprToString(int oper){
         }
         printf("\n------------------------------------end of variable table-------------------------------------------\n");
     }
+
+    void printSyntaxTreeHelper(nodeType *p, int depth) {
+    if (!p) return;
+
+    // Imprimer des espaces pour le décalage, basé sur la profondeur actuelle
+    for (int i = 0; i < depth; i++) {
+        printf("| "); // Utiliser deux espaces pour le décalage
+    }
+
+    switch (p->type) {
+        case typeConst:
+            printf("|-- const %d\n", p->con);
+            break;
+        case typeId:
+            printf("|-- id %s\n", findInList(p->id)->name);
+            break;
+        case typeOpr:
+            printf("|-- opr %s\n", oprToString(p->opr.oper));
+            for (int i = 0; i < p->opr.nops; i++) {
+                printSyntaxTreeHelper(p->opr.op[i], depth + 1); // Appel récursif avec une profondeur augmentée
+            }
+            break;
+    }
+}
+
 
 
