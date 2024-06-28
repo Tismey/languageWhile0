@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 3.7.5.  */
+/* A Bison parser, made by GNU Bison 3.8.2.  */
 
 /* Bison interface for Yacc-like parsers in C
 
@@ -16,7 +16,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -39,7 +39,7 @@
 # define YY_YY_Y_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 0
+# define YYDEBUG 1
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -60,11 +60,12 @@ extern int yydebug;
     IF = 261,                      /* IF  */
     PRINT = 262,                   /* PRINT  */
     ELSE = 263,                    /* ELSE  */
-    GE = 264,                      /* GE  */
-    LE = 265,                      /* LE  */
-    EQ = 266,                      /* EQ  */
-    NE = 267,                      /* NE  */
-    ASSIGN = 268                   /* ASSIGN  */
+    THEN = 264,                    /* THEN  */
+    ASSIGN = 265,                  /* ASSIGN  */
+    GE = 266,                      /* GE  */
+    LE = 267,                      /* LE  */
+    EQ = 268,                      /* EQ  */
+    NE = 269                       /* NE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -79,23 +80,24 @@ extern int yydebug;
 #define IF 261
 #define PRINT 262
 #define ELSE 263
-#define GE 264
-#define LE 265
-#define EQ 266
-#define NE 267
-#define ASSIGN 268
+#define THEN 264
+#define ASSIGN 265
+#define GE 266
+#define LE 267
+#define EQ 268
+#define NE 269
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 7 "while.y"
+#line 10 "while.y"
 
     int iValue; /* integer value */
     int sIndex; /* symbol table index */
     nodeType *nPtr; /* node pointer */
 
-#line 99 "y.tab.h"
+#line 101 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -106,6 +108,8 @@ typedef union YYSTYPE YYSTYPE;
 
 extern YYSTYPE yylval;
 
+
 int yyparse (void);
+
 
 #endif /* !YY_YY_Y_TAB_H_INCLUDED  */

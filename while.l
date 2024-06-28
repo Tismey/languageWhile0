@@ -1,12 +1,19 @@
 %{
 #include <stdlib.h>
-#include "y.tab.h"
+#include "master.h"
 void yyerror(char *);
 %}
 %%
-[a-z] {
-yylval.iValue = *yytext - 'a';
+$[a-z]* {
+char * varname = (char *) malloc(strlen(yytext) + 1);
+strcpy(varname, yytext);
+yylval.iValue = addTolistWithId(varname);
 return VARIABLE;
+}
+
+[0-9] {
+yylval.sIndex = atoi(yytext);
+return INTEGER;
 }
 
 [1-9][0-9]* {
@@ -24,8 +31,9 @@ return *yytext;
 "if" return IF;
 "else" return ELSE;
 ":=" return ASSIGN;
+"then" return THEN;
 [ \t\n]+ ; /* ignore whitespace */
-. yyerror("Unknown character");
+. printf("Unknown character %s\n", yytext);
 %%
 int yywrap(void) {
 return 1;

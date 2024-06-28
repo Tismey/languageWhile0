@@ -2,7 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "master.h"
+nodeType *result = NULL;
 %}
+
+
 
 %union {
     int iValue; /* integer value */
@@ -13,13 +16,15 @@
 %token <iValue> INTEGER
 %token <sIndex> VARIABLE
 %token WHILE IF PRINT ELSE
-%left IF ELSE
+%left IF ELSE THEN
+%left ASSIGN
 %left GE LE EQ NE '>' '<' ';'
 %left '+' '-'
 %left '*' '/'
-%left ASSIGN
+%nonassoc '.'
 
-%type <nPtr> statement expr stmt_list
+
+%type <nPtr> statement expr stmt_list var program
 
 
 %{
@@ -28,27 +33,33 @@ int yylex(void);
 int booleanValue = 1;
 int sym[26];
 %}
+
+
+
 %%
 program:
-program statement '.' {ex($2); printf("program terminer"); }
-|
+stmt_list'.'{ result = $1; printf("================COMPILED==================\n\n"); YYACCEPT;}
 ;
 statement:
-expr { $$ = $1; }
-| statement ';' statement {$$  = $1; $$ = $3;}
-| IF '(' expr ')' statement ELSE statement {$$ = opr(IF,3,$3,$5,$7);}
-|'{' stmt_list '}' { $$ = $2; }
+IF '(' expr ')' THEN '{' stmt_list '}' ELSE '{' stmt_list '}'{$$ = opr(IF,3,$3,$7,$11);}
+|IF '(' expr ')' THEN '{' stmt_list '}'{$$ = opr(IF,2,$3,$7);}
+|expr { $$ = $1; }
+| WHILE '(' expr ')' THEN '{' stmt_list '}' {$$ = opr(WHILE,2,$3,$7);}
 ;
 
 stmt_list:
-statement { $$ = $1; }
-| stmt_list statement { $$ = opr(';', 2, $1, $2); }
+statement{ $$ = $1; }
+| stmt_list ';' statement{ $$ = opr(';', 2, $1, $3); }
+;
+
+var:
+VARIABLE { $$ = id($1); }
 ;
 
 expr:
 INTEGER { $$ = con($1); }
-| VARIABLE { $$ = id($1); printf("variable %c ::=  %d\n",'a' + $1, sym[$1]);}
-| VARIABLE ASSIGN expr { $$ = opr(ASSIGN,2,$1,$3); }
+| var { $$ = $1; }
+| var ASSIGN expr { $$ = opr(ASSIGN,2,$1,$3); }
 | expr '+' expr { $$ = opr('+',2,$1,$3); }
 | expr '-' expr { $$ = opr('-',2,$1,$3); }
 | expr '*' expr { $$ = opr('*',2,$1,$3); }
@@ -63,10 +74,12 @@ INTEGER { $$ = con($1); }
 ;
 %%
 void yyerror(char *s) {
-fprintf(stderr, "%s\n", s);
+    fprintf(stderr, "%s\n", s);
 }
 
 int main(void) {
-return yyparse();
-
+if(yyparse() == 0) {
+    ex(result);
+}
+return 0;
 }

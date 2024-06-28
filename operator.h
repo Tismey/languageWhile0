@@ -6,6 +6,7 @@ typedef enum { typeConst, typeId, typeOpr } nodeEnum;
 typedef int conNodeType;
 typedef int idNodeType;
 
+
 typedef struct oprNodeType {
     int oper;
     int nops;
@@ -23,6 +24,19 @@ typedef struct nodeTypeTag {
     };
 } nodeType;
 
+typedef struct varList{
+    char *name;
+    int value;
+    struct varList *next;
+} varList;
+
+char * oprToString(int oper);
+
+extern varList *varListHead;
+
+int addTolistWithId(char *name);
+
+varList *findInList(int id);
 
 nodeType *opr(int oper, int nops, ...);
 
@@ -31,6 +45,7 @@ nodeType *con(int value);
 
 nodeType *id(int i);
 
+void printList();
 extern int sym[26];
 
 

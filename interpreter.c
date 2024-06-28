@@ -3,15 +3,12 @@
 
 int ex(nodeType *p){
     if(!p) return 0;
-    printf("p = %d\n", p->type);
     switch(p->type){
         case typeConst:
-            printf("%d", p->con);
             return p->con;
             break;
         case typeId:
-            printf("%d", sym[p->id]);
-            return sym[p->id];
+            return findInList(p->id)->value;
             break;
         case typeOpr:
         switch(p->opr.oper){
@@ -22,10 +19,12 @@ int ex(nodeType *p){
                 break;
             case IF:
                 if(ex(p->opr.op[0]))
-                    ex(p->opr.op[1]);
+                    return ex(p->opr.op[1]);
                 else if(p->opr.nops > 2)
-                    ex(p->opr.op[2]);
-                return 0;
+                   return ex(p->opr.op[2]);
+                else
+                    return 0;
+                
                 break;
             case PRINT:
                 printf("%d\n", ex(p->opr.op[0]));
@@ -36,8 +35,12 @@ int ex(nodeType *p){
                 return ex(p->opr.op[1]);
                 break;
             case ASSIGN:
-                printf("ASSIGN letter %c value %d to -> %d\n", p->opr.op[0]->id + 'a',0, 0);
-                return sym[p->opr.op[0]->id] = ex(p->opr.op[1]);
+                printf("ASSIGN\n");
+                printf("ASSIGN var id %d value %d to -> ?\n", p->opr.op[0]->id ,findInList(p->opr.op[0]->id)->value);
+                findInList(p->opr.op[0]->id)->value = ex(p->opr.op[1]);
+                printf("is now %d\n", findInList(p->opr.op[0]->id)->value);
+                printList();
+                return sym[p->opr.op[0]->id];
                 break;
             case '+':
                 return ex(p->opr.op[0]) + ex(p->opr.op[1]);
