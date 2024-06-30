@@ -1,3 +1,8 @@
+/*
+Timothée M'BASSIDJE 12104516
+Denis LINDE 12104516
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -47,6 +52,6 @@ nodeType *id(int i);
 
 void printList();
 void printSyntaxTreeHelper(nodeType *p, int depth);
-extern int sym[26];
+//
 
 

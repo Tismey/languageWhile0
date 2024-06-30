@@ -1,3 +1,8 @@
+/*
+Timothée M'BASSIDJE 12104516
+Denis LINDE 12104516
+*/
+
 %{
 #include <stdlib.h>
 #include "master.h"
@@ -32,6 +37,16 @@ return *yytext;
 "else" return ELSE;
 ":=" return ASSIGN;
 "then" return THEN;
+"or" return OR;
+"and" return AND;
+"true" {
+    yylval.sIndex = 1;
+    return INTEGER;
+}
+"false" {
+    yylval.sIndex = 0;
+    return INTEGER;
+}
 [ \t\n]+ ; /* ignore whitespace */
 . printf("Unknown character %s\n", yytext);
 %%

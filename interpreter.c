@@ -1,3 +1,8 @@
+/*
+Timothée M'BASSIDJE 12104516
+Denis LINDE 12104516
+*/
+
 #include "master.h"
 
 
@@ -13,11 +18,13 @@ int ex(nodeType *p){
         case typeOpr:
         switch(p->opr.oper){
             case WHILE:
+            printList();
                 while(ex(p->opr.op[0]))
                     ex(p->opr.op[1]);
                 return 0;
                 break;
             case IF:
+                printList();
                 if(ex(p->opr.op[0]))
                     return ex(p->opr.op[1]);
                 else if(p->opr.nops > 2)
@@ -40,7 +47,7 @@ int ex(nodeType *p){
                 findInList(p->opr.op[0]->id)->value = ex(p->opr.op[1]);
                 printf("is now %d\n", findInList(p->opr.op[0]->id)->value);
                 printList();
-                return sym[p->opr.op[0]->id];
+                return findInList(p->opr.op[0]->id)->value;
                 break;
             case '+':
                 return ex(p->opr.op[0]) + ex(p->opr.op[1]);
@@ -72,6 +79,12 @@ int ex(nodeType *p){
             case EQ:
                 return ex(p->opr.op[0]) == ex(p->opr.op[1]);
                 break;
+            case OR:
+                return (ex(p->opr.op[0]) || ex(p->opr.op[1]));
+            break;
+            case AND:
+                return (ex(p->opr.op[0]) && ex(p->opr.op[1]));
+            break;
         }
     }
 }

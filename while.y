@@ -1,3 +1,8 @@
+/*
+Timothée M'BASSIDJE 12104516
+Denis LINDE 12104516
+*/
+
 %{
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,7 +23,7 @@ nodeType *result = NULL;
 %token WHILE IF PRINT ELSE
 %left IF ELSE THEN
 %left ASSIGN
-%left GE LE EQ NE '>' '<' ';'
+%left GE LE EQ NE '>' '<' ';' OR AND
 %left '+' '-'
 %left '*' '/'
 %nonassoc '.'
@@ -71,6 +76,8 @@ INTEGER { $$ = con($1); }
 | expr LE expr { $$ = opr(LE,2,$1,$3); }
 | expr EQ expr { $$ = opr(EQ,2,$1,$3); }
 | expr NE expr { $$ = opr(NE,2,$1,$3); }
+| expr OR expr { $$ = opr(NE,2,$1,$3); }
+| expr AND expr { $$ = opr(NE,2,$1,$3); }
 ;
 %%
 void yyerror(char *s) {
@@ -81,6 +88,8 @@ int main(void) {
 if(yyparse() == 0) {
     printf("======================================INTERPRETER============================================\n");
     ex(result);
+    printf("ETAT FINAL VARIABLE \n");
+    printList();
     printf("================================INTERPRETER EXIT SUCCESS=====================================\n");
 }
 return 0;

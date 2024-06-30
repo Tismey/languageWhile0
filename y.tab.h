@@ -1,5 +1,8 @@
 /* A Bison parser, made by GNU Bison 3.8.2.  */
-
+/*
+Timothée M'BASSIDJE 12104516
+Denis LINDE 12104516
+*/
 /* Bison interface for Yacc-like parsers in C
 
    Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2021 Free Software Foundation,
@@ -65,7 +68,9 @@ extern int yydebug;
     GE = 266,                      /* GE  */
     LE = 267,                      /* LE  */
     EQ = 268,                      /* EQ  */
-    NE = 269                       /* NE  */
+    NE = 269,                      /* NE  */
+    OR = 270,                      /* OR  */
+    AND = 271                      /* AND  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -86,6 +91,8 @@ extern int yydebug;
 #define LE 267
 #define EQ 268
 #define NE 269
+#define OR 270
+#define AND 271
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -97,7 +104,7 @@ union YYSTYPE
     int sIndex; /* symbol table index */
     nodeType *nPtr; /* node pointer */
 
-#line 101 "y.tab.h"
+#line 105 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
